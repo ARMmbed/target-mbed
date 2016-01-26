@@ -31,8 +31,40 @@ Derived targets must specify a default toolchain, for example in the derived
 
 
 ## Code Coverage
-The gcc toolchain will build with -gcov if `debug.options.coverage` is set in
-the yotta config. See the
-[mbed-gcc](https://github.com/ARMmbed/target-mbed-gcc) derived target for
-details.
+To enable code coverage for a specific module, add this config to the application's config.json:
 
+```JSON
+    "debug" : {
+        "options" : {
+            "coverage" : {
+                "modules" : {
+                    "<module name>" : true
+                }
+            }
+        }
+    }
+```
+
+For example, to add code coverage to the sockets module, use this config:
+
+```JSON
+    "debug" : {
+        "options" : {
+            "coverage" : {
+                "modules" : {
+                    "sockets" : true
+                }
+            }
+        }
+    }
+```
+
+If building tests, then this config can be passed on the command line via the ```--config``` option. For example,
+
+```
+yotta build --config testconfig.json
+```
+
+```
+yotta build --config '"debug" : { "options" : { "coverage" : { "modules" : { "sockets" : true } } } }'
+```
