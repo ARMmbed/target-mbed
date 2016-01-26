@@ -1,7 +1,12 @@
 {
-  "name": "mbed-gcc",
-  "version": "1.1.0",
-  "description": "base mbed build target for gcc toolchain",
+  "name": "mbed",
+  "version": "0.0.1",
+  "description": "base mbed build target for all mbed OS targets",
+  "homepage": "https://github.com/ARMmbed/target-mbed",
+  "repository": {
+    "url": "git@github.com:ARMmbed/target-mbed.git",
+    "type": "git"
+  },
   "licenses": [
     {
       "url": "https://spdx.org/licenses/Apache-2.0",
@@ -9,13 +14,11 @@
     }
   ],
   "keywords": [
-    "mbed-official",
-    "gcc"
+    "mbed-official"
   ],
   "similarTo": [
     "mbed",
-    "arm",
-    "gcc"
+    "arm"
   ],
   "config": {
     "mbed": {},
