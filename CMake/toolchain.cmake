@@ -188,7 +188,4 @@ else()
     message(FATAL_ERROR "yotta config value mbed.toolchain must be set to either 'armcc' or 'gcc'")
 endif()
 
-
-
-
-
+include(Jinja2/source)
