@@ -18,6 +18,7 @@ import sys
 import json
 from jinja2 import Environment, FileSystemLoader
 
+
 def replace_hyphens_in_keys(dictionary):
     result = {}
     # yotta config consists out of nested dictionaries only.
@@ -32,6 +33,7 @@ def replace_hyphens_in_keys(dictionary):
 
     return result
 
+
 def load_config(configfile):
     # load and parse the yotta config JSON file
     with open(configfile, "r") as jsonfile:
@@ -40,14 +42,24 @@ def load_config(configfile):
     # replace all hyphens in keys with underscores
     # this is required so that keys can be accessed in a Jinja2 template!
     # {% set value = config.key %} won't work with a hyphen in the key
-    config = replace_hyphens_in_keys(config)
-
-    return config
+    return replace_hyphens_in_keys(config)
 
 
-def render_with_config(source, destination, config):
+def render_with_config(config, source, destination):
     # create the Jinja2 environment
     env = Environment(loader=FileSystemLoader(os.path.dirname(source)), trim_blocks=True, lstrip_blocks=True)
+
+    # check if we need to import custom filters
+    if os.path.isfile(os.path.join(os.path.dirname(source), 'jinja2_filters.py')):
+        # insert the source folder into the module search path
+        sys.path.insert(0, os.path.dirname(source))
+        # import the filters
+        import jinja2_filters
+        # filters must be prefixed with `filter_`
+        for f in [f for f in dir(jinja2_filters) if f.startswith('filter_')]:
+            name = f[7:]
+            # add custom filter to environment
+            env.filters[name] = getattr(jinja2_filters, f)
 
     # open the template source file
     template = env.get_template(os.path.basename(source))
@@ -62,4 +74,4 @@ def render_with_config(source, destination, config):
 
 if __name__ == "__main__":
     config = load_config(sys.argv[1])
-    render_with_config(sys.argv[2], sys.argv[3], config)
+    render_with_config(config, sys.argv[2], sys.argv[3])
