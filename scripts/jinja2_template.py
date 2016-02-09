@@ -47,7 +47,12 @@ def load_config(configfile):
 
 def render_with_config(config, source, destination):
     # create the Jinja2 environment
-    env = Environment(loader=FileSystemLoader(os.path.dirname(source)), trim_blocks=True, lstrip_blocks=True)
+    env = Environment(
+            loader = FileSystemLoader(os.path.dirname(source)),
+            trim_blocks = True,
+            lstrip_blocks = True,
+            extensions = ['jinja2.ext.do']
+        )
 
     # check if we need to import custom filters
     if os.path.isfile(os.path.join(os.path.dirname(source), 'jinja2_filters.py')):
