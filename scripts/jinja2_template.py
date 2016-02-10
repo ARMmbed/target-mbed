@@ -16,7 +16,7 @@
 import os
 import sys
 import json
-from jinja2 import Environment, FileSystemLoader
+import jinja2
 
 
 def replace_hyphens_in_keys(dictionary):
@@ -47,8 +47,8 @@ def load_config(configfile):
 
 def render_with_config(config, source, destination):
     # create the Jinja2 environment
-    env = Environment(
-            loader = FileSystemLoader(os.path.dirname(source)),
+    env = jinja2.Environment(
+            loader = jinja2.FileSystemLoader(os.path.dirname(source)),
             trim_blocks = True,
             lstrip_blocks = True,
             extensions = ['jinja2.ext.do']
