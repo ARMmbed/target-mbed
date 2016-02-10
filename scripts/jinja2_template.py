@@ -18,6 +18,9 @@ import sys
 import json
 import jinja2
 
+@jinja2.contextfunction
+def get_context(c):
+    return c
 
 def replace_hyphens_in_keys(dictionary):
     result = {}
@@ -53,6 +56,7 @@ def render_with_config(config, source, destination):
             lstrip_blocks = True,
             extensions = ['jinja2.ext.do']
         )
+    env.globals['context'] = get_context
 
     # check if we need to import custom filters
     if os.path.isfile(os.path.join(os.path.dirname(source), 'jinja2_filters.py')):
