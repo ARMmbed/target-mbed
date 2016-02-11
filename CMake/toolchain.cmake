@@ -190,3 +190,4 @@ endif()
 
 include(Jinja2/source)
 include(Jinja2/header)
+include(Jinja2/linker_script)
