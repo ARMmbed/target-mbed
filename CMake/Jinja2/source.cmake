@@ -13,19 +13,19 @@ function(generate_source_from_jinja2_template  input  output)
     # TODO: output isn't a required argument with this approach, we could pick somewhere in the build directory automatically
     # TODO: need to make sure output directory exists
 
-    # message("Using ${MBED_JINJA2_GENERATE_SCRIPT} to generate from ${input} to ${output}")
-
-    # add dependency of the output file on the (merged) yotta config info:
-    set_source_files_properties("${output}" PROPERTIES
-                                OBJECT_DEPENDS "${YOTTA_CONFIG_MERGED_JSON_FILE}")
-
-    # add dependency of the output file on the script used to generate it:
-    set_source_files_properties("${output}" PROPERTIES
-                                OBJECT_DEPENDS "${MBED_JINJA2_GENERATE_SCRIPT}")
-
-    # add dependency of the output file on the input file:
-    set_source_files_properties("${output}" PROPERTIES
-                                OBJECT_DEPENDS "${input}")
+    # add dependency of the output file on:
+    # - the (merged) yotta config info,
+    # - the script used to generate it, and
+    # - the input file.
+    set_source_files_properties(
+        "${output}"
+        PROPERTIES
+            GENERATED TRUE
+        OBJECT_DEPENDS
+            "${YOTTA_CONFIG_MERGED_JSON_FILE}" ;
+            "${MBED_JINJA2_GENERATE_SCRIPT}" ;
+            "${input}"
+    )
 
     add_custom_command(
         OUTPUT "${output}"
