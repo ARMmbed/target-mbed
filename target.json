@@ -1,6 +1,6 @@
 {
   "name": "mbed",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "base mbed build target for all mbed OS targets",
   "homepage": "https://github.com/ARMmbed/target-mbed",
   "repository": {
