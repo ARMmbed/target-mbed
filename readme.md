@@ -1,3 +1,7 @@
+## Deprecation note!
+
+**Please note: This repository is deprecated and it is no longer actively maintained**.
+
 ## Base yotta Target Description for all mbed OS targets
 
 This is a base [yotta target
